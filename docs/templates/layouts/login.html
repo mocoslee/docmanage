@@ -1,0 +1,11 @@
+{% extends "layouts/wide.html" %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% block content  %}
+<script type="text/javascript">
+window.onload=function(){
+	var uri = window.location.host;
+	window.location.href = "{{ auth_url }}?response_type=code&client_id={{ client_id }}&scope=user&redirect_uri=http://"+uri+"/userauth/";
+};
+</script>
+{% endblock %}

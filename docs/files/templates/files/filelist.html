@@ -1,0 +1,49 @@
+{% extends "layouts/admin.html" %}
+{% load i18n %}
+{% load bootstrap3 %}
+{% block content %}
+<h1>{{ title }}</h1>
+<div class="row">
+    <div class="col-md-offset-2 col-md-6">
+    </div>
+</div>
+<div class="row">
+	<table class="table table-border">
+	<tr><th colspan="3">
+		<div class="row" style="width:40%">
+			<div class="col-md-6">
+				<div class="checkbox"><label><input type="checkbox" id="allbox">{% ifequal did "0" %}<a href="{% url 'files:filelist' %}"> 全部文件</a>{% else %}<a href="{% url 'files:filelist' %}?did={{ pid }}">返回上一级</a>|<a href="{% url 'files:filelist' %}"> 全部文件</a>{% endifequal %}</label></div>
+			</div>
+			<div class="col-md-2"><button class="btn btn-default" id="downloads"><i class="fa fa-download fa-fw"></i>下载</button>
+			</div>
+			<div class="col-md-2"><button  class="btn btn-default" id="removes"><i class="fa fa-remove fa-fw"></i>删除</button>
+			</div>
+			<div class="col-md-2"><button  class="btn btn-default" id="moves"><i class="icon-signin icon-large"></i>移动到</button>
+			</div>
+		</div>
+	</th></tr>
+	{% for line in dirs %}
+	<tr><td><input type="checkbox" name="fbox">   <a href="{% url 'files:filelist' %}?did={{ line.id }}"><i class="fa fa-folder fa-lg"></i>  {{ line.name }}</a></td><td>{{ line.ctime|date:"F j,Y"}}</td><td>{{ line.uid }}</td></tr>
+	{% endfor %}
+	{% for line in files %}
+	<tr><td><input type="checkbox" name="fbox">   <a href="#"><i class="fa fa-filer fa-lg"></i>  {{ line.name }}</a></td><td>{{ line.ctime|date:"F j,Y"}}</td><td>{{ line.uid }}</td></tr>
+	{% endfor %}
+	</table>
+</div>
+<script type="text/javascript">
+$(function(){
+	$("#allbox").click(function(){
+		alert(this.checked);
+		if(this.checked == true){
+			$("[name='fbox']").attr("checked",true);
+		}else{
+			$("[name='fbox']").attr("checked",false);
+		};
+	});
+	$("#removes").click(function(){
+	
+	});
+});
+</script>
+
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends 'layouts/admin.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block content %}
+
+  <link href="{% static 'css/welcome/main.css' %}" rel="stylesheet" type="text/css">
+  <link rel="apple-touch-icon" href="{% static 'meta/apple-touch-icon.png' %}">
+  <link rel="apple-touch-startup-image" href="{% static 'meta/apple-touch-startup-image-640x1096.png' %}" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone 5+ -->
+  <link rel="apple-touch-startup-image" href="{% static 'meta/apple-touch-startup-image-640x920.png' %}"  media="(device-width: 320px) and (device-height: 480px) and (-webkit-device-pixel-ratio: 2)"> <!-- iPhone, retina -->
+
+  <div class="container">
+    <div class="heading">
+      <h1 >欢迎登录密码中心!</h1>
+      <div class="scores-container">
+        <!--div class="score-container">0</div>
+        <div class="best-container">0</div-->
+      </div>
+    </div>
+
+    <div class="above-game">
+      <p class="game-intro"><strong>放松片刻!，不要耽误工作哦 ~~</strong></p>
+      <a class="restart-button">重试一下</a>
+    </div>
+
+    <div class="game-container">
+      <div class="game-message">
+        <p></p>
+        <div class="lower">
+	        <a class="keep-playing-button">Keep going</a>
+          <a class="retry-button">Try again</a>
+        </div>
+      </div>
+
+      <div class="grid-container">
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+        <div class="grid-row">
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+          <div class="grid-cell"></div>
+        </div>
+      </div>
+
+      <div class="tile-container">
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="{% static 'js/welcome/bind_polyfill.js' %}"></script>
+  <script src="{% static 'js/welcome/classlist_polyfill.js' %}"></script>
+  <script src="{% static 'js/welcome/animframe_polyfill.js' %}"></script>
+  <script src="{% static 'js/welcome/keyboard_input_manager.js' %}"></script>
+  <script src="{% static 'js/welcome/html_actuator.js' %}"></script>
+  <script src="{% static 'js/welcome/grid.js' %}"></script>
+  <script src="{% static 'js/welcome/tile.js' %}"></script>
+  <script src="{% static 'js/welcome/local_storage_manager.js' %}"></script>
+  <script src="{% static 'js/welcome/game_manager.js' %}"></script>
+  <script src="{% static 'js/welcome/application.js' %}"></script>
+
+{% endblock %}

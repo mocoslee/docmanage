@@ -1,0 +1,28 @@
+{% extends 'layouts/admin.html' %}
+{% load i18n %}
+{% load staticfiles %}
+{% load bootstrap3 %}
+{% block content %}
+
+
+<div class="container">
+    <div class="row">
+		<div class='col-md-10 '>
+		</div>
+		<div class='col-md-10 '>
+	      <h1 class='text-center'>欢迎登录系统!</h1>
+		</div>
+		<div class='col-md-10 '>
+			<ul class='text-left' style="padding-left:400px;padding-top:50px;">
+				<!--li><a href="{% url 'user:vpninfo' %}">点击这里查看VPN使用手册~~</a></li-->
+				{% if message %}
+				<li><a href="/admin">{{ message }}</a></li>
+				{% endif %}
+			</ul>
+		</div>
+    </div>
+</div>
+
+
+
+{% endblock %}

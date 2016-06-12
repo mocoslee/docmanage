@@ -1,0 +1,55 @@
+{% load staticfiles %}
+<html>
+<head>
+{% block content %}
+<script language="javascript" src="{% static 'js/jquery.js' %}"></script>
+<script language="javascript" src="{% static 'js/ajaxfileupload.js' %}"></script>
+
+<script id='clientEventHandlersJS' language='javascript'>
+
+function ajaxFileUpload()
+{
+
+        $.ajaxFileUpload({
+                url:"{% url 'files:upload' %}",
+                secureuri:false,
+                fileElementId:'fileToUpload',
+                dataType: 'text',
+				data:"csrfmiddlewaretoken={{ csrf_token }}",
+                beforeSend:function(){
+                        $("#loading").show();
+                },
+                complete:function(){
+                        $("#loading").hide();
+                },
+                success: function (data, status){
+                        if(typeof(data.error) != 'undefined'){
+                                if(data.error != ''){
+                                        alert(data.error);
+                                }else{
+                                        alert(data.msg);
+                                }
+                        }
+                },
+                error: function (data, status, e){
+                        alert(e);
+                }
+        });
+        return false;
+};
+
+</script>
+{% endblock %}
+</head>
+<body>
+
+
+                <div>
+                <img id="loading" style="display:none;" src="{% static 'image/image.gif' %}">
+                <form enctype="multipart/form-data" method="POST" action="" name="form">
+				{% csrf_token %}
+                <input id="fileToUpload" class="input" type="file" name="fileToUpload" size="45"><input type="button" name="up" id="buttonUpload" value="Upload" onclick="ajaxFileUpload()">
+                </form>
+                </div>
+</body>
+</html>               
