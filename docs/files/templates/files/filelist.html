@@ -26,7 +26,7 @@
 	<tr><td><input type="checkbox" name="fbox">   <a href="{% url 'files:filelist' %}?did={{ line.id }}"><i class="fa fa-folder fa-lg"></i>  {{ line.name }}</a></td><td>{{ line.ctime|date:"F j,Y"}}</td><td>{{ line.uid }}</td></tr>
 	{% endfor %}
 	{% for line in files %}
-	<tr><td><input type="checkbox" name="fbox">   <a href="#"><i class="fa fa-filer fa-lg"></i>  {{ line.name }}</a></td><td>{{ line.ctime|date:"F j,Y"}}</td><td>{{ line.uid }}</td></tr>
+	<tr><td><input type="checkbox" name="fbox">   <a href="/static/{{ line.id }}"><i class="fa fa-file fa-lg"></i> {{ line.fname }}</a></td><td>{{ line.ctime|date:"F j,Y"}}</td><td></td></tr>
 	{% endfor %}
 	</table>
 </div>

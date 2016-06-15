@@ -28,14 +28,28 @@ def groupcheck(func):
 
 class UploadView(View):
 
-    def get(self,request):
-
-        return render(request,'files/upload.html')
-
     def post(self,request):
 
+        did = request.POST.get("did",0)
+        pdir = []
+        try:
+            t_dir = UserDir.objects.get(pk=did)
+        except Exception:
+            t_dir = None
+        while t_dir:
+            pdir.append(t_dir.name)
+            try:
+                t_dir = User.objects.get(pk=t_dir.parentid)
+            except Exception:
+                break
+        pdir.reverse()
+        new_dir = "%s/%s" % (settings.ROOT_DIR,"/".join(pdir))
         for files in request.FILES.keys():
-            with open(request.FILES[files].name,"wb") as fd:
+            upfile = "%s/%s" % (new_dir,request.FILES[files].name) 
+            fs = UserFile(did=did,ftype=upfile.split(".")[-1],\
+                fname=request.FILES[files].name)
+            fs.save()
+            with open(upfile,"wb") as fd:
                 for line in request.FILES[files].readlines():
                     fd.write(line)
 
@@ -108,9 +122,6 @@ class FileListView(View):
         
         did = request.POST.get("did",0)      
         fname = request.POST.get("fname")
-        d = UserDir(name=fname,parentid=did,uid=request.session.get('uid'),\
-            gid=request.session.get("gid"))
-        d.save()
         pdir = []
         try:
             t_dir = UserDir.objects.get(pk=did)
@@ -125,7 +136,11 @@ class FileListView(View):
 
         pdir.reverse()
         new_dir = "%s/%s/%s" % (settings.ROOT_DIR,"/".join(pdir),fname)
-        os.makedirs(new_dir)
+        if not os.path.is_dir(new_dir):
+            d = UserDir(name=fname,parentid=did,uid=request.session.get('uid'),\
+                gid=request.session.get("gid"))
+            d.save()
+            os.makedirs(new_dir)
 
         return redirect("%s?did=%s" % (reverse("files:filelist"),did))
 

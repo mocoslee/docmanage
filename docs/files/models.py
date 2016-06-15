@@ -27,6 +27,9 @@ class UserFile(models.Model):
     ftype = models.CharField(max_length=16,default="")
     fname = models.CharField(max_length=64,default="")
     is_recover = models.IntegerField(default=1)
+    uid = models.IntegerField(default=0)
+    gid = models.IntegerField(default=0)
+    ctime = models.DateTimeField(default=timezone.now)
 
     class Meta:
         

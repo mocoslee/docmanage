@@ -51,9 +51,12 @@ jQuery.extend({
 		var frameId = 'jUploadFrame' + id;
 		var formId = 'jUploadForm' + id;		
         // Watch for a new set of requests
-		var csrf = s.data.split("=")
-		var input = jQuery("<input name='" + csrf[0] + "' value='" + csrf[1] + "'>");
-		jQuery(input).appendTo(form);
+        var args = s.data.split("&");
+        for(var i=0;i<args.length;i++){
+		    var element = args[i].split("=")
+		    var input = jQuery("<input name='" + element[0] + "' value='" + element[1] + "'>");
+            jQuery(input).appendTo(form);
+        };
         if ( s.global && ! jQuery.active++ )
 		{
 			jQuery.event.trigger( "ajaxStart" );

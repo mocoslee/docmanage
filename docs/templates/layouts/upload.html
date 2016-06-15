@@ -1,0 +1,87 @@
+{% load staticfiles %}
+
+<script src="{% static 'js/ajaxfileupload.js' %}"></script>
+<script  type='text/javascript'>
+        function upnext(){
+            var ele = "<input id='fileToUpload'  type='file' name='fileToUpload' size='45'>";
+            $("#upfiles").html(ele);
+        };
+</script>
+<script  type='text/javascript'>
+$(function(){
+
+    $("#buttonUpload").click(function(){
+
+        $.ajaxFileUpload({
+                url:"{% url 'files:upload' %}",
+                secureuri:false,
+                fileElementId:'fileToUpload',
+                dataType: 'text',
+                data:"csrfmiddlewaretoken={{ csrf_token }}&did={{ did }}",
+                beforeSend:function(){
+                        $("#loading").show();
+                },
+                complete:function(){
+                        $("#loading").hide();
+                },
+                success: function (data, status){
+                        if(typeof(data.error) != 'undefined'){
+                                if(data.error != ''){
+                                        alert(data.error);
+                                }else{
+                                        alert(data.msg);
+                                }
+                        }else{
+                            var next = "<a href='#' onclick='upnext()'>继续上传</a>";
+                            $("#upfiles").html("上传成功,"+ next);
+                        };
+                },
+                error: function (data, status, e){
+                        alert(e);
+                }
+        });
+    });
+
+    $(".modal.fade").each(function(i){
+        var modalc = $(this).find(".modal-content");
+        modalc.css({
+            "margin-top":"0px",
+            "top":function(){
+                return ($(document.body).height()-modalc.height()-60)/2  + "px";
+            }
+        });
+    });
+});
+</script>
+
+
+<div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelkedby="folderlabel" aria-hidden="true">
+<div class="modal-dialog">
+	<div class="modal-content">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h4 class="mldal-title" id="flabel">upload</h4>
+		</div>
+		<div class="modal-body">
+			<fieldset>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="fileToUpload">文件名</label>
+				<div class="col-sm-18" id="upfiles">
+                    <input id="fileToUpload"  type="file" name="fileToUpload" size="45">
+				</div>
+                <div class="col-sm-2">
+                    <img src="{% static 'images/loading.gif' %}"
+                    class="img-responsive" style="display:none;"></div>
+			</div>
+			</fieldset>
+		</div>
+		<div class="modal-footer">
+		    <div class="form-group">
+            <input type="button" class="btn btn-default"  id="buttonUpload" value="上传" >
+			<input type="button" class="btn btn-default" data-dismiss="modal" value="关闭" id="bclose">
+			</div>
+		</div>
+			</form>
+	</div>
+</div>
+</div>
